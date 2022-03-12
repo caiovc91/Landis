@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Landis.Models;
 
 namespace Landis.Controller
 {
@@ -19,15 +20,26 @@ namespace Landis.Controller
         {
 
             Endpoint newEndpoint = new Endpoint();
-            newEndpoint.Id = id;
-            newEndpoint.serial_number = serial_number;
-            newEndpoint.meter_number = meter_number;
-            newEndpoint.firmware_version = firmware_version;
-            newEndpoint.switch_state = switch_state;
+            try
+            {
+                newEndpoint.Id = id;
+                newEndpoint.serial_number = serial_number;
+                newEndpoint.meter_number = meter_number;
+                newEndpoint.firmware_version = firmware_version;
+                newEndpoint.switch_state = switch_state;
+                endpoints.Add(newEndpoint);
 
-            endpoints.Add(newEndpoint);
+                Console.WriteLine("New Endpoint added succesfully");
+            }
+            catch (Exception ex)
+            {
 
-            Console.WriteLine("New Endpoint added succesfully");
+                throw;
+            }
+
+
+
+
 
         }
 
@@ -42,7 +54,7 @@ namespace Landis.Controller
         {
             var sel_endpoint = endpoints.Where(e => e.Id == id).FirstOrDefault();
             endpoints.Remove(sel_endpoint);
-            Console.WriteLine("Endpoint removed successfully");
+            Console.WriteLine("Endpoint removed successfully.");
         }
 
         public void ListAllEndpoints(string company, IEnumerable<Endpoint> list)
