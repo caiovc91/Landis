@@ -4,21 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Landis.Models;
+using Landis.Interface;
 
 namespace Landis.Controller
 {
-    public class BaseController
+    public class BaseController : IBaseController
     {
-        public List<Endpoint> endpoints = new List<Endpoint>
+        public  List<EndpointModel> endpointModels = new List<EndpointModel>
         {
-            new Endpoint {Id = 1, serial_number = "NSX1P2W", model_id = 16, meter_number = 5123556, firmware_version = "revA.2022.Landis", switch_state = 1 },
-            new Endpoint {Id = 1, serial_number = "NSX1P3W", model_id = 17, meter_number = 5123556, firmware_version = "revA1.2022.Landis", switch_state = 2 },
-            new Endpoint {Id = 1, serial_number = "NSX2P3W", model_id = 18, meter_number = 5123556, firmware_version = "revA.2022.Landis", switch_state = 0 },
-            new Endpoint {Id = 1, serial_number = "NSX3P4W", model_id = 19, meter_number = 5123556, firmware_version = "revA.2022.Landis", switch_state = 2 },
+            new EndpointModel{ModelId = 16, ModelName = "NSX1P2W"},
+            new EndpointModel{ModelId = 17, ModelName = "NSX1P3W"},
+            new EndpointModel{ModelId = 18, ModelName = "NSX2P3W"},
+            new EndpointModel{ModelId = 19, ModelName = "NSX3P4W"},
         };
-        public void InsertEndpoint(Endpoint enp)
+        public  List<Endpoint> endpoints = new List<Endpoint>
         {
-
+            new Endpoint { serial_number = "1", ModelId = 16 , meter_number = 5123556, firmware_version = "10.3.22", switch_state = 1 },
+            new Endpoint { serial_number = "2", ModelId = 17, meter_number = 5123556, firmware_version = "10.3.22", switch_state = 2 },
+            new Endpoint { serial_number = "3", ModelId = 18 , meter_number = 5123556, firmware_version = "8.3.22", switch_state = 0 },
+            new Endpoint { serial_number = "4", ModelId = 19 , meter_number = 5123556, firmware_version = "10.3.22", switch_state = 2 },
+        };
+        public void Insert(Endpoint enp)
+        {
             try
             {
                 endpoints.Add(enp);
@@ -37,7 +44,7 @@ namespace Landis.Controller
             Armed = 2
         }
 
-        public void EditEndpoint(string serial_number, int switch_state)
+        public void Edit(string serial_number, int switch_state)
         {
 
             var sel_endpoint = endpoints.Where(e => e.serial_number == serial_number).FirstOrDefault();
@@ -60,14 +67,21 @@ namespace Landis.Controller
 
         }
 
-        public void DeleteEndpoint(int id)
+        public void Delete(string serial_number)
         {
-            var sel_endpoint = endpoints.Where(e => e.Id == id).FirstOrDefault();
+            var sel_endpoint = endpoints.Where(e => e.serial_number == ser).FirstOrDefault();
             endpoints.Remove(sel_endpoint);
             Console.WriteLine("Endpoint removed successfully.");
         }
+        
+        public void Find(string serial_number)
+        {
+            var endpointresult = endpoints.Where(s => string.Equals(s.serial_number, serial_number)).FirstOrDefault();
+            Console.WriteLine("Endpoint Results: ");
+            Console.WriteLine(endpointresult);
+        }
 
-        public void ListAllEndpoints()
+        public void List()
         {
             Console.WriteLine("------------ Endpoints List ------------");
             foreach (Endpoint endpoint in endpoints.ToList())
