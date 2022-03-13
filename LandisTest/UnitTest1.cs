@@ -1,15 +1,20 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Landis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace LandisTest
 {
     [TestClass]
-    public class UnitTest1
+    public class LandisTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void CanInsertEndpoint()
         {
+            //Arrange
+            var endpoint = new Endpoint();
+            //Act
 
+            //Assert
         }
     }
 }
