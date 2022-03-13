@@ -10,6 +10,8 @@ namespace Landis.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Endpoint> Endpoint { get; set; }
+
+        //optional
+        //public List<Endpoint> Endpoint { get; set; }
     }
 }
