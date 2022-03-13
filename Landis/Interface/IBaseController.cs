@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Landis.Interface
 {
-    interface  IBaseController
+    public interface IBaseController
     {
 
         void Insert(Endpoint enp);
@@ -14,5 +14,6 @@ namespace Landis.Interface
         void Delete(string serial_number);
         void List();
         void Find(string serial_number);
+        bool ValidateExistantSerial(string serial);
     }
 }
