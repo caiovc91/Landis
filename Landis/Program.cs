@@ -4,20 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Landis.Controller;
-using Landis.Models;
+using Landis.Interface;
 
 namespace Landis
 {
     public class Program
     {
-        public static BaseController bc = new BaseController();
-        public static Endpoint ep = new Endpoint();
+        private readonly IBaseController ibc = new BaseController();
 
-        public static void Main(string[] args)
+        public Program(IBaseController _ibc)
+        {
+            _ibc = ibc; 
+        }
+
+        static void Main(string[] args)
         {
 
             bool endApp = false;
-            Console.WriteLine("Simple CRUD in C#\r");
+            Console.WriteLine("Endpoint Manager\r");
             Console.WriteLine("------------------------\n");
             Console.Write("Choose an option below: \n");
             Console.WriteLine("\ti - Add new Endpoint");
@@ -32,7 +36,7 @@ namespace Landis
 
                 string op = Console.ReadLine();
                 switch (op)
-                { 
+                {
                     case "i":
                         AddEndPoint();
                         break;
@@ -40,7 +44,7 @@ namespace Landis
                         EditEndPoint();
                         break;
                     case "l":
-                        bc.ListAllEndpoints();
+                        bc.List();
                         break;
                     default:
                         Console.WriteLine("Invalid Option!");
@@ -51,8 +55,6 @@ namespace Landis
 
         private static void AddEndPoint()
         {
-
-            Random rnd = new Random(1001);
             Console.WriteLine("Enter serial number: \n");
             string serial = Console.ReadLine();
             Console.WriteLine("Enter Model id");
@@ -101,24 +103,26 @@ namespace Landis
             //if (int.TryParse(switch_est, out sw_est))
             //    ep.switch_state = sw_est;
 
-            ep.Id = rnd.Next(1, 100001);
+            Endpoint ep = new Endpoint();
+
             ep.serial_number = serial;
-            ep.model_id = model_id;
+            ep.ModelId = model_id;
             ep.meter_number = meter_num;
             ep.firmware_version = firmware_ver;
             ep.switch_state = switch_est;
-
-            bc.InsertEndpoint(ep);
+            BaseController bc = new BaseController();
+            bc.Insert(ep)
         }
+    
 
         private static void EditEndPoint()
         {
             Console.WriteLine("Enter endpoint serial number: \n");
             string serial = Console.ReadLine();
             Console.WriteLine("Enter new switch state ( 0 - disconnected, 1 - connected, 2 - armed): \n");
-            int state = int.Parse(Console.ReadLine());  
+            int state = int.Parse(Console.ReadLine());
 
-            bc.EditEndpoint(serial, state);
+            EditEndpoint(serial, state);
 
         }
     }
