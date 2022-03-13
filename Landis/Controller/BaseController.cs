@@ -58,7 +58,7 @@ namespace Landis.Controller
             Console.WriteLine("Endpoint removed successfully.");
         }
 
-        public void Find(string serial_number)
+        public Endpoint Find(string serial_number)
         {
             var endpointresult = endpoints.Where(s => s.serial_number == serial_number).FirstOrDefault();
             Console.WriteLine("Endpoint Results: ");
@@ -70,6 +70,7 @@ namespace Landis.Controller
             Console.WriteLine("\t firmware ver:" + endpointresult.firmware_version);
             Console.WriteLine("\t switch state: " + endpointresult.switch_state);
             Console.WriteLine("-----------------------------------------");
+            return endpointresult;
         }
 
         public void List()

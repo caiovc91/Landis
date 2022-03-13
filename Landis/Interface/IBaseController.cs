@@ -13,7 +13,7 @@ namespace Landis.Interface
         void Edit(string serial_number, int switch_state);
         void Delete(string serial_number);
         void List();
-        void Find(string serial_number);
+        Endpoint Find(string serial_number);
         bool ValidateExistantSerial(string serial);
     }
 }
