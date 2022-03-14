@@ -91,6 +91,11 @@ namespace Landis
             {
                 Environment.Exit(0);
             }
+            else
+            {
+                Console.Clear();
+                RenderMenu();
+            }
         }
         private void RenderMenu()
         {
